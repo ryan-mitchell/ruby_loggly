@@ -10,6 +10,7 @@ doc
 
 # bundler
 .bundle
+Gemfile.lock
 
 # jeweler generated
 pkg
@@ -39,7 +40,7 @@ pkg
 #.\#*
 
 # For vim:
-#*.swp
+*.swp
 
 # For redcar:
 #.redcar
