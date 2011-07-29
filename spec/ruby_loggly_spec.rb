@@ -54,5 +54,21 @@ describe Loggly do
       )
       @loggly.log(log_parameters)
     end
+
+    it "should use the EC2 host if the EC2 flag is set" do
+      log_string = "this is a test log"
+      ec2logger = Loggly.new(
+        :subdomain => @test_subdomain, 
+        :user => @test_user, 
+        :pass => @test_pass, 
+        :key => @test_key,
+        :ec2 => true
+      )
+      RestClient.should_receive(:post).with(
+        "https://ec2.logs.loggly.com/inputs/%s" % @test_key,
+        log_string
+      )
+      ec2logger.log(log_string)
+    end
   end
 end
