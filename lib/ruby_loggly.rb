@@ -16,7 +16,8 @@ class Loggly
   end
 
   def search(query)
-    RestClient.get("https://#{@user}:#{@pass}@#{@subdomain}.loggly.com/api/search", {:params => {:q => query}})
+    response = RestClient.get("https://#{@user}:#{@pass}@#{@subdomain}.loggly.com/api/search", {:params => {:q => query}})
+    yield response.to_str if block_given?
   end
 
 end
