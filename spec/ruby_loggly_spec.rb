@@ -3,12 +3,12 @@ require 'spec_helper'
 describe Loggly do
 
 	before(:all) do
-		@test_uri = 'example.loggly.com'
+		@test_subdomain = 'example'
 		@test_user = 'user'
 		@test_pass = 'pass'
 		@test_key = '123456'
 		@loggly = Loggly.new(
-			:uri => @test_uri, 
+			:subdomain => @test_subdomain, 
 			:user => @test_user, 
 			:pass => @test_pass, 
 			:key => @test_key
@@ -23,8 +23,11 @@ describe Loggly do
 
 		it "should generate an appropriate RestClient GET" do
 			search_string = "search string"
-			RestClient.should_receive(:get).with(@test_uri, {:params => {:q => search_string}})
-			@loggly.search("search string")
+			RestClient.should_receive(:get).with(
+        "https://#{@test_user}:#{@test_pass}@#{@test_subdomain}.loggly.com/api/search", 
+        {:params => {:q => search_string}}
+      )
+			@loggly.search(search_string)
 		end
 	end
 
