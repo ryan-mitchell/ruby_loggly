@@ -15,17 +15,13 @@ describe Loggly do
 		)
 	end
 
-	it "should throw an exception if no URI is passed" do
-
-	end	
-
 	describe "#search" do
 
 		before(:each) do
 			RestClient.stub!(:get)
 		end
 
-		it "should generate an appropriate RestClient get request" do
+		it "should generate an appropriate RestClient GET" do
 			search_string = "search string"
 			RestClient.should_receive(:get).with(@test_uri, {:params => {:q => search_string}})
 			@loggly.search("search string")
@@ -38,10 +34,22 @@ describe Loggly do
 			RestClient.stub!(:post)
 		end
 
-		it "should generate an appropriate RestClient POST" do
-			RestClient.should_receive(:post)
-			@loggly.log('this is a log')
+		it "should generate an appropriate RestClient POST with a raw payload" do
+			log_string = "this is a test log"
+			RestClient.should_receive(:post).with(
+				"https://logs.loggly.com/inputs/%s" % @test_key,
+				log_string
+			)
+			@loggly.log(log_string)
+		end
+
+		it "should generate an appropriate RestClient POST with parameters" do
+			log_parameters = { :time => 123456, :type => 'foo', :logger => 'bar' }
+			RestClient.should_receive(:post).with(
+				"https://logs.loggly.com/inputs/%s" % @test_key,
+				log_parameters
+			)
+			@loggly.log(log_parameters)
 		end
 	end
-
 end
