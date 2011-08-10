@@ -21,7 +21,7 @@ Jeweler::Tasks.new do |gem|
   gem.description ="A simple Ruby interface to the Loggly API" 
   gem.email = "mitchellryanj@gmail.com"
   gem.authors = ["Ryan Mitchell"]
-	gem.version = "0.0.1"
+	gem.version = "0.0.2"
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
